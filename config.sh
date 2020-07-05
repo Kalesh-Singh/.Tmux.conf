@@ -18,6 +18,7 @@ tat() {
         tmux switch-client -t "$session_name"
       fi
 }
+
 EOF
 
 source ~/.bashrc
@@ -30,7 +31,7 @@ if [ -f  $TMUX_CONF ]; then
 fi
 ln -s $(pwd)/tmux.conf $TMUX_CONF
 
-# Reload .tmux.conf if alread in tmux
+# Reload .tmux.conf if already in tmux
 if [ -n "$TMUX" ]; then
     tmux source-file ~/.tmux.conf
     tmux display-message "~/.tmux.conf reloaded"
