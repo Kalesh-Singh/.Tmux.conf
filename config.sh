@@ -1,16 +1,6 @@
 #!/bin/bash
 
-# Add tat command to PATH
-# sudo cat > /bin/tat <<EOF
-# tmux new-session -A -s ${1:-temp}
-# EOF
-
-# sudo cat > /bin/tat <<EOF
-# tmux new-session -A -s ${1:-temp}
-# EOF
-
-# sudo chmod +x /bin/tat
-
+# Add tat function to .bashrc
 if ! grep -q "tat()" "$HOME/.bashrc"; then 
 cat >> ~/.bashrc << 'EOF'
 
@@ -34,12 +24,15 @@ source ~/.bashrc
 fi
 
 # Symlink the configuration to tmux's default search file
-ln -s $(pwd)/tmux.conf ~/.tmux.conf &> /dev/null
+TMUX_CONF=~/.tmux.conf
+if [ -f  $TMUX_CONF ]; then
+    rm $TMUX_CONF
+fi
+ln -s $(pwd)/tmux.conf $TMUX_CONF
 
-echo $TMUX
-
-#if [ -n "$TMUX" ]; then
+# Reload .tmux.conf if alread in tmux
+if [ -n "$TMUX" ]; then
     tmux source-file ~/.tmux.conf
     tmux display-message "~/.tmux.conf reloaded"
-#fi
+fi
 
